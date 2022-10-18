@@ -93,4 +93,30 @@ CREATE TABLE "Service_Mechanic" (
   FOREIGN KEY ("ticket_id") REFERENCES "Ticket"(ticket_id)
 );
 
+CREATE TABLE "Customer" (
+  "customer_id" SERIAL,
+  "first_name" VARCHAR(150),
+  "last_name" VARCHAR(150),
+  "phone" VARCHAR(15),
+  "address" VARCHAR(150),
+  "city" VARCHAR(30),
+  "zip" VARCHAR(15),
+  PRIMARY KEY ("customer_id")
+);
+
+create function add_customer(_customer_id INTEGER, _first_name VARCHAR, _last_name VARCHAR, _phone VARCHAR, _address VARCHAR, _city VARCHAR, _zip VARCHAR)
+returns void
+as $MAIN$
+begin 
+	insert into "Customer"(customer_id,first_name,last_name, phone, address, city, zip)
+	values (_customer_id, _first_name, _last_name, _phone, _address, _city, _zip);
+end;
+$MAIN$
+language plpgsql
+
+select add_customer(1116, 'Walter', 'Sobchak', '312-555-2340', '555 Lebowski Lane', 'Chicago', '60641');
+
+select * from "Customer" 
+
+
 
